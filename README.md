@@ -1,3 +1,3 @@
 # PythonBot
-This version of PythonBot uses Python and HTML.
-Author: nitrax
+
+A simple chatbot powered by a fine-tuned DialoGPT model, deployed on Hugging Face Spaces.
