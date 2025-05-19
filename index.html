@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PythonBot</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background-color: #f5f5f5; }
+    #chat-box { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background: #fff; }
+    #input-box { margin-top: 10px; }
+    .user { color: blue; font-weight: bold; margin-top: 5px; }
+    .bot { color: green; font-weight: bold; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>PythonBot</h1>
+  <div id="chat-box"></div>
+  <div id="input-box">
+    <input type="text" id="user-input" placeholder="Type a message..." style="width: 80%;" />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value.trim();
+      if (!message) return;
+
+      chatBox.innerHTML += `<div class="user">You: ${message}</div>`;
+      input.value = "";
+
+      try {
+        const res = await fetch("https://justdanitraxxd-pythonbot.hf.space/run/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: [message] })
+        });
+
+        const data = await res.json();
+        const botReply = data.data[0];
+        chatBox.innerHTML += `<div class="bot">Bot: ${botReply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (err) {
+        chatBox.innerHTML += `<div class="bot">Bot: Error connecting to API</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
