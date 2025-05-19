@@ -1,0 +1,6 @@
+User: Hello!
+Bot: Hi there! How can I assist you today?
+User: What's the weather like?
+Bot: It's sunny and warm today.
+User: Thank you!
+Bot: You're welcome!
